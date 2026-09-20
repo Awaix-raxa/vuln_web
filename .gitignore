@@ -1,0 +1,28 @@
+# Virtual environments
+.venv/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Packaging / build artifacts
+dist/
+build/
+*.egg-info/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment / secrets
+.env
+.env.local
+
+# Editors
+.vscode/
+.idea/
+
+# OS cruft
+.DS_Store
+Thumbs.db
