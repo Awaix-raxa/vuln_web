@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up &middot; Security Vulnerability Lab</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="auth-body">
+    <header class="app-header">
+        <div class="app-title">Security Vulnerability Lab</div>
+        <div class="app-logos">
+            <img src="/static/images/PUCIT_Logo.png" alt="PUCIT">
+            <img src="/static/images/blue-logo-scl2.png" alt="SCL">
+            <img src="/static/images/excaliat-logo.png" alt="Excaliat">
+        </div>
+    </header>
+
+    <main class="auth-split">
+        <section class="auth-panel-left">
+            <span class="badge">SECURITY LAB</span>
+            <h1>Create Account</h1>
+            <p>Register to begin your hands-on journey through common web
+               security vulnerabilities and their defenses.</p>
+            <ul class="feature-list">
+                <li>8 intentional vulnerabilities to discover</li>
+                <li>Learn by exploiting, then fixing</li>
+                <li>University-grade teaching material</li>
+            </ul>
+            <span class="circle circle-1"></span>
+            <span class="circle circle-2"></span>
+            <span class="circle circle-3"></span>
+        </section>
+
+        <section class="auth-panel-right">
+            <div class="auth-form">
+                <h2 class="form-title">Sign Up</h2>
+                <p class="form-subtitle">Create your lab account</p>
+
+                <form id="signup-form" action="/signup" method="POST">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" autocomplete="off">
+
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" autocomplete="off">
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" autocomplete="off">
+
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" autocomplete="off">
+
+                    <span id="error" class="error-message" style="display:none;"></span>
+
+                    <button type="submit" class="btn-primary">Sign Up</button>
+                </form>
+
+                <p class="auth-switch">Already have an account?
+                    <a href="/login">Log in</a></p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const form = document.getElementById('signup-form');
+        const errorBox = document.getElementById('error');
+
+        form.addEventListener('submit', (e) => {
+            const pw = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm_password').value;
+            if (pw !== confirm) {
+                e.preventDefault();
+                errorBox.textContent = 'Passwords do not match';
+                errorBox.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

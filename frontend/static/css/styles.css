@@ -1,0 +1,291 @@
+/* Security Vulnerability Lab — design system (see .claude/specs/app-foundation.md §5) */
+
+:root {
+    --indigo-deep: #1a237e;
+    --indigo-mid:  #3949ab;
+    --indigo-dark: #283593;
+    --slate-black: #0f172a;
+    --panel-wash:  #eef1f8;
+    --white:       #ffffff;
+
+    --text-primary:   #1e293b;
+    --text-secondary: #475569;
+    --text-muted:     #64748b;
+    --indigo-light:   #c5cae9;
+
+    --r-input: 8px;
+    --r-btn:   8px;
+    --r-card:  12px;
+    --r-tag:   6px;
+
+    --shadow-header: 0 2px 10px rgba(26, 35, 126, 0.08);
+    --shadow-card-hover: 0 4px 16px rgba(26, 35, 126, 0.10);
+    --focus-glow: 0 0 0 3px rgba(57, 73, 171, 0.12);
+
+    --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font);
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-primary);
+}
+
+/* ---------- Shared header ---------- */
+.app-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 70px;
+    background: var(--white);
+    border-bottom: 1px solid var(--indigo-light);
+    box-shadow: var(--shadow-header);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 100;
+}
+.app-title {
+    color: var(--indigo-deep);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+.app-logos { display: flex; align-items: center; gap: 0.75rem; }
+.app-logos img { width: 54px; height: 54px; object-fit: contain; }
+
+/* ---------- Auth (login / signup) ---------- */
+.auth-body { height: 100vh; overflow: hidden; }
+.auth-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+    padding-top: 70px;
+}
+
+.auth-panel-left {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0d1b5e, var(--indigo-deep), var(--indigo-dark));
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3.5rem;
+}
+.auth-panel-left .badge {
+    display: inline-block;
+    width: fit-content;
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--white);
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--r-tag);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.25rem;
+}
+.auth-panel-left h1 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+.auth-panel-left p { color: var(--indigo-light); line-height: 1.6; max-width: 32ch; }
+.feature-list { list-style: none; margin-top: 1.75rem; }
+.feature-list li {
+    color: var(--indigo-light);
+    padding: 0.4rem 0 0.4rem 1.5rem;
+    position: relative;
+}
+.feature-list li::before {
+    content: "\2713";
+    position: absolute; left: 0;
+    color: var(--white);
+    font-weight: 700;
+}
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.07);
+}
+.circle-1 { width: 260px; height: 260px; top: -80px; right: -60px; }
+.circle-2 { width: 180px; height: 180px; bottom: -50px; left: -40px; }
+.circle-3 { width: 120px; height: 120px; bottom: 80px; right: 60px; }
+
+.auth-panel-right {
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+.auth-form { width: 100%; max-width: 400px; }
+.form-title { font-size: 1.7rem; font-weight: 700; color: var(--indigo-deep); }
+.form-subtitle { color: var(--text-muted); margin: 0.35rem 0 1.75rem; }
+
+.auth-form label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 0.9rem 0 0.35rem;
+}
+.auth-form input {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    background: #f8f9ff;
+    border: 1.5px solid var(--indigo-light);
+    border-radius: var(--r-input);
+    font-family: var(--font);
+    font-size: 0.9rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+.auth-form input:focus {
+    outline: none;
+    border-color: var(--indigo-mid);
+    box-shadow: var(--focus-glow);
+}
+
+.btn-primary {
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 0.8rem;
+    background: var(--indigo-deep);
+    color: var(--white);
+    border: none;
+    border-radius: var(--r-btn);
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.btn-primary:hover { background: var(--indigo-dark); }
+
+.error-message {
+    margin-top: 1rem;
+    padding: 0.7rem 0.85rem;
+    background: #fdecec;
+    border: 1px solid #f5b5b5;
+    border-radius: var(--r-input);
+    color: #b02121;
+    font-size: 0.85rem;
+}
+.auth-switch { margin-top: 1.5rem; color: var(--text-muted); font-size: 0.85rem; }
+.auth-switch a { color: var(--indigo-deep); font-weight: 600; text-decoration: none; }
+
+/* ---------- Dashboard ---------- */
+.dash-body { background: var(--panel-wash); min-height: 100vh; }
+
+.hero {
+    margin-top: 70px;
+    background: linear-gradient(135deg, var(--indigo-deep), var(--indigo-mid));
+    color: var(--white);
+    padding: 2.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.hero-left h1 { font-size: 2rem; font-weight: 800; }
+.hero-left p { color: var(--indigo-light); margin-top: 0.4rem; }
+.hero-right { display: flex; align-items: center; gap: 1rem; }
+.hero-user { font-weight: 600; }
+.btn-logout {
+    background: rgba(255, 255, 255, 0.18);
+    color: var(--white);
+    padding: 0.55rem 1.1rem;
+    border-radius: var(--r-btn);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.15s;
+}
+.btn-logout:hover { background: rgba(255, 255, 255, 0.30); }
+
+.content { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+.mission-card {
+    background: var(--white);
+    border-radius: var(--r-card);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-header);
+}
+.section-title { font-size: 1.4rem; font-weight: 700; color: var(--indigo-deep); margin-bottom: 0.6rem; }
+.mission-card p { color: var(--text-secondary); line-height: 1.6; }
+
+.grid-header {
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin: 2rem 0 1rem;
+}
+
+.vuln-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+.vuln-card {
+    background: var(--white);
+    border: 1px solid var(--indigo-light);
+    border-radius: var(--r-card);
+    padding: 1.25rem;
+    transition: box-shadow 0.15s;
+}
+.vuln-card:hover { box-shadow: var(--shadow-card-hover); }
+.vuln-card p { color: var(--text-secondary); margin-top: 0.6rem; line-height: 1.5; }
+
+.tag {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--r-tag);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+.tag-sqli    { background: #fef3c7; color: #92620a; }  /* yellow */
+.tag-xss     { background: #fde2e2; color: #b02121; }  /* red */
+.tag-session { background: #ede4fb; color: #6b28c9; }  /* purple */
+.tag-brute   { background: #ffe8d1; color: #b45309; }  /* orange */
+.tag-crypto  { background: #d8f5e0; color: #1a7a3c; }  /* green */
+.tag-exposed { background: #dbeafe; color: #1d4ed8; }  /* blue */
+.tag-csrf    { background: #fce1ef; color: #be1a67; }  /* pink */
+
+.process-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.step-card {
+    background: var(--indigo-deep);
+    color: var(--white);
+    border-radius: var(--r-card);
+    padding: 1.5rem;
+    text-align: center;
+}
+.step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+.step-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem; }
+.step-card p { color: var(--indigo-light); font-size: 0.85rem; line-height: 1.5; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .auth-body { overflow: auto; }
+    .auth-split { grid-template-columns: 1fr; height: auto; }
+    .auth-panel-left { padding: 2.5rem; }
+    .vuln-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .app-logos img { width: 40px; height: 40px; }
+    .app-header { padding: 0 1rem; }
+    .app-title { font-size: 1.1rem; }
+}

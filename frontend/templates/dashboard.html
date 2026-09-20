@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard &middot; Security Vulnerability Lab</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="dash-body">
+    <header class="app-header">
+        <div class="app-title">Security Vulnerability Lab</div>
+        <div class="app-logos">
+            <img src="/static/images/PUCIT_Logo.png" alt="PUCIT">
+            <img src="/static/images/blue-logo-scl2.png" alt="SCL">
+            <img src="/static/images/excaliat-logo.png" alt="Excaliat">
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-left">
+            <h1>Security Vulnerability Lab</h1>
+            <p>Discover, exploit, and mitigate real-world web vulnerabilities.</p>
+        </div>
+        <div class="hero-right">
+            <span class="hero-user">Logged in as {{username}}</span>
+            <a href="/logout" class="btn-logout">Log Out</a>
+        </div>
+    </section>
+
+    <main class="content">
+        <div class="mission-card">
+            <h2 class="section-title">Your Mission</h2>
+            <p>This application contains 8 deliberately introduced security
+               flaws spanning the OWASP Top 10. Work through each one: find it
+               in the source, exploit it safely, then implement a proper fix.</p>
+        </div>
+
+        <h3 class="grid-header">Vulnerabilities to Discover</h3>
+        <div class="vuln-grid">
+            <div class="vuln-card">
+                <span class="tag tag-sqli">SQLi</span>
+                <p>Authentication bypass through unparameterized login queries.</p>
+            </div>
+            <div class="vuln-card">
+                <span class="tag tag-xss">XSS</span>
+                <p>Stored cross-site scripting via an unescaped username.</p>
+            </div>
+            <div class="vuln-card">
+                <span class="tag tag-xss">XSS</span>
+                <p>Reflected cross-site scripting via the search query parameter.</p>
+            </div>
+            <div class="vuln-card">
+                <span class="tag tag-session">Session</span>
+                <p>Session hijacking enabled by a weak, hardcoded secret key.</p>
+            </div>
+            <div class="vuln-card">
+                <span class="tag tag-crypto">Crypto</span>
+                <p>Weak password storage using unsalted MD5 hashing.</p>
+            </div>
+            <div class="vuln-card">
+                <span class="tag tag-exposed">Exposed</span>
+                <p>Unauthenticated database file download endpoint.</p>
+            </div>
+            <div class="vuln-card">
+                <span class="tag tag-brute">Brute</span>
+                <p>No rate limiting, allowing unlimited credential attempts.</p>
+            </div>
+            <div class="vuln-card">
+                <span class="tag tag-csrf">CSRF</span>
+                <p>Cross-site request forgery from missing token validation.</p>
+            </div>
+        </div>
+
+        <div class="process-steps">
+            <div class="step-card">
+                <span class="step-badge">1</span>
+                <h4>Find</h4>
+                <p>Locate the vulnerable code in the source.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-badge">2</span>
+                <h4>Exploit</h4>
+                <p>Demonstrate the flaw with a real attack vector.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-badge">3</span>
+                <h4>Mitigate</h4>
+                <p>Implement secure coding practices to fix it.</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

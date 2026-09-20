@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login &middot; Security Vulnerability Lab</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="auth-body">
+    <header class="app-header">
+        <div class="app-title">Security Vulnerability Lab</div>
+        <div class="app-logos">
+            <img src="/static/images/PUCIT_Logo.png" alt="PUCIT">
+            <img src="/static/images/blue-logo-scl2.png" alt="SCL">
+            <img src="/static/images/excaliat-logo.png" alt="Excaliat">
+        </div>
+    </header>
+
+    <main class="auth-split">
+        <section class="auth-panel-left">
+            <span class="badge">SECURITY LAB</span>
+            <h1>Welcome Back</h1>
+            <p>Sign in to access the hands-on security laboratory and continue
+               discovering, exploiting, and mitigating real vulnerabilities.</p>
+            <ul class="feature-list">
+                <li>Exploit real OWASP Top 10 flaws</li>
+                <li>Full source-code visibility</li>
+                <li>Safe, isolated environment</li>
+            </ul>
+            <span class="circle circle-1"></span>
+            <span class="circle circle-2"></span>
+            <span class="circle circle-3"></span>
+        </section>
+
+        <section class="auth-panel-right">
+            <div class="auth-form">
+                <h2 class="form-title">Log In</h2>
+                <p class="form-subtitle">Enter your credentials to continue</p>
+
+                <form id="login-form">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" autocomplete="off">
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" autocomplete="off">
+
+                    <div id="error" class="error-message" style="display:none;"></div>
+
+                    <button type="submit" class="btn-primary">Log In</button>
+                </form>
+
+                <p class="auth-switch">Don't have an account?
+                    <a href="/signup">Sign up</a></p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const form = document.getElementById('login-form');
+        const errorBox = document.getElementById('error');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorBox.style.display = 'none';
+
+            const data = new FormData();
+            data.append('username', document.getElementById('username').value);
+            data.append('password', document.getElementById('password').value);
+
+            const resp = await fetch('/login', { method: 'POST', body: data });
+            const result = await resp.json();
+
+            if (result.success) {
+                window.location.href = result.redirect;
+            } else {
+                errorBox.textContent = result.error || 'Login failed';
+                errorBox.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
