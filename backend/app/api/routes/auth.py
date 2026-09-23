@@ -42,9 +42,14 @@ def signup_page():
 
 @router.post("/signup")
 def signup_post(
-    username: str = Form(...),
-    email: str = Form(...),
-    password: str = Form(...),
+    # NOTE: default="" rather than Form(...). FastAPI treats an EMPTY form
+    # value as a *missing* field for a required param and rejects the request
+    # with a raw 422 before the handler runs -- which made the "All fields are
+    # required" check in auth_service.signup() unreachable dead code. Defaulting
+    # to "" lets blank submissions reach that check and get the intended message.
+    username: str = Form(default=""),
+    email: str = Form(default=""),
+    password: str = Form(default=""),
 ):
     return auth_service.signup(username, email, password)
 
@@ -57,8 +62,11 @@ def login_page():
 @router.post("/login")
 def login_post(
     request: Request,
-    username: str = Form(...),
-    password: str = Form(...),
+    # default="" for the same reason as signup_post above: an empty field must
+    # reach auth_service.login() so it returns the JSON error the login page's
+    # fetch() handler knows how to render, not a raw 422 validation payload.
+    username: str = Form(default=""),
+    password: str = Form(default=""),
 ):
     return auth_service.login(request, username, password)
 
