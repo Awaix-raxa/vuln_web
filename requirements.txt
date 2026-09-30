@@ -1,0 +1,7 @@
+# Runtime dependencies for the vulnerable auth lab (backend/app).
+# Pinned to the versions verified locally; mirrors backend/pyproject.toml.
+# Transitive deps (starlette, pydantic, anyio, h11, click) resolve from these.
+fastapi==0.141.1
+uvicorn==0.53.0
+python-multipart==0.0.32
+itsdangerous==2.2.0
