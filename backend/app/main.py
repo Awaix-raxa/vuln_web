@@ -43,7 +43,12 @@ app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
 
 app.include_router(auth.router)
 
-# Static asset mounts.
+# Static asset mounts. A fresh checkout (e.g. a deploy build) does not carry
+# empty directories, and StaticFiles raises RuntimeError at import time when
+# its directory is missing, so ensure both exist first.
+for _static_subdir in ("css", "images"):
+    os.makedirs(os.path.join(STATIC_DIR, _static_subdir), exist_ok=True)
+
 app.mount(
     "/static/css",
     StaticFiles(directory=os.path.join(STATIC_DIR, "css")),
