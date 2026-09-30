@@ -1,0 +1,25 @@
+# Render blueprint for the vulnerable auth lab (backend/ + frontend/).
+#
+# WARNING: this application is intentionally insecure -- it carries the eight
+# deliberate vulnerabilities documented in PRD.md / TDD.md (MD5 password
+# hashing, SQL string concatenation, a hardcoded session secret, and an
+# unauthenticated /download/db that serves the entire database). Restrict
+# access to anything deployed from this blueprint, and never put real
+# credentials in it.
+services:
+  - type: web
+    name: vuln-web
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    # The `app` package is only importable from backend/. app/main.py adds
+    # backend/ to sys.path, but that only runs once main.py itself has been
+    # found, so uvicorn needs --app-dir to locate it; plain
+    # `uvicorn app.main:app` from the repo root fails with
+    # "ModuleNotFoundError: No module named 'app'".
+    startCommand: uvicorn --app-dir backend app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      # Matches the version this is developed and verified against; the repo
+      # root pyproject.toml requires >=3.12.
+      - key: PYTHON_VERSION
+        value: 3.12.3
