@@ -30,6 +30,18 @@ def _read_template(name: str) -> str:
         return fh.read()
 
 
+STATIC_IMAGES_DIR = os.path.join(PROJECT_ROOT, "frontend", "static", "images")
+
+
+@router.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    """Browsers request /favicon.ico at the root regardless of <link rel="icon">."""
+    return FileResponse(
+        os.path.join(STATIC_IMAGES_DIR, "favicon.ico"),
+        media_type="image/x-icon",
+    )
+
+
 @router.get("/")
 def index():
     return RedirectResponse(url="/signup", status_code=302)
@@ -82,7 +94,10 @@ def download_db():
 
 
 @router.get("/search", response_class=HTMLResponse)
-def search_user(q: str):
+# q defaults to "" for the same reason as the Form(default="") params above:
+# a bare /search with no query string otherwise fails FastAPI validation and
+# returns a raw 422 JSON payload instead of the search page.
+def search_user(q: str = ""):
     # VULN-3 (Reflected XSS) + VULN-1 (SQL Injection): the query parameter is
     # concatenated into SQL and reflected into the HTML response unescaped.
     try:
